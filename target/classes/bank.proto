@@ -1,0 +1,47 @@
+syntax="proto3";//descripteur de web service de type GRPC
+option java_package="com.Oussez.stubs"; //declaraction de chemin où les stubs seront enregistrés.
+
+service BankService{
+  //Type of communication
+  rpc convert(ConvertCurrencyRequest) returns(ConvertCurrencyResponse); //type : unary model
+
+  rpc convertStreamServer(ConvertCurrencyRequest) returns(stream ConvertCurrencyResponse); //type : Server Streaming model
+
+  rpc convertStreamClient(stream ConvertCurrencyRequest) returns(ConvertCurrencyResponse); // type : Client Streaming model
+
+  rpc convertStreamCltSrv(stream ConvertCurrencyRequest) returns(stream ConvertCurrencyResponse); // type : Bi-directional Streaming model
+
+  rpc getListAccount(listAccountRequest) returns (listAccount);
+
+
+}
+
+//Definir le contenu des attributs de méthodes au-dessus : le contenu de messages échangés
+message ConvertCurrencyRequest{
+  string currencyFrom =1;
+  string currencyTo=2;
+  double amount=3;
+}
+
+message ConvertCurrencyResponse{
+  string currencyFrom =1;
+  string currencyTo=2;
+  double amount=3;
+  double result=4;
+}
+
+message listAccount{
+  repeated Account account=1;
+}
+
+
+message listAccountRequest{
+  int64 totalAccount=1;
+}
+
+message Account{
+  int64 id=1;
+  string name=2;
+  string status=3;
+  double amount=4;
+}
